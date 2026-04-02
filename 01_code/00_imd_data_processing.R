@@ -14,6 +14,7 @@ library(data.table)
 
 # paths
 inp_path_imd <- c("~/06_university/00_university_of_sussex/05_summer_semester/03_wider_topics_in_data_science/00_repo/00_data/00_imd/")
+inp_path_geo <- c("~/06_university/00_university_of_sussex/05_summer_semester/03_wider_topics_in_data_science/00_repo/00_data/xx_geo/")
 
 # imd file names (same as when downloaded from gov.uk)
 file_imd_2025 <- c("File_1_IoD2025_Index_of_Multiple_Deprivation.xlsx")
@@ -23,16 +24,16 @@ file_imd_2010 <- c("1871524.xls")
 file_imd_2007 <- c("IMD 2007 for DCLG 4 dec.xls")
 
 # postcode mapping
-file_post <- c("ONSPD_MAY_2025_UK.csv")
+file_geo <- c("geo_map_clean.csv")
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# PostCode Data: Import
+# Geographic Data: Import
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-dt_post <- as.data.table(read.csv(paste0(inp_path_imd, file_post)))
+dt_geo <- as.data.table(read.csv(paste0(inp_path_geo, file_geo)))
 
 # cut down to unique lsoas
-dt_post_cut <- dt_post[,.(lsoa01, lsoa11, lsoa21)]
-dt_post_cut <- unique(dt_post_cut)
+dt_geo_cut <- dt_geo[,.(lsoa01, lsoa11, lsoa21)]
+dt_geo_cut <- unique(dt_geo_cut)
 gc()
 
 # Geography mapping
@@ -89,21 +90,21 @@ dt_07 <- dt_07[,c("la_code", "gor_code", "gor_name", "imd_score_07") := NULL]
 #~~~~~~~~~~~~~~~~~~~~~~~~~
 ### 2025 - LSOA21
 dt_25 <- merge(dt_25,
-               unique(dt_post_cut[,.(lsoa11, lsoa21)]),
+               unique(dt_geo_cut[,.(lsoa11, lsoa21)]),
                by.x = 'lsoa_code',
                by.y = 'lsoa21',
                all.x = T)
 
 ### 2010 - LSOA01
 dt_10 <- merge(dt_10,
-               unique(dt_post_cut[,.(lsoa01, lsoa11)]),
+               unique(dt_geo_cut[,.(lsoa01, lsoa11)]),
                by.x = "lsoa_code",
                by.y = "lsoa01",
                all.x = T)
 
 ### 2007 -  LSOA01
 dt_07 <- merge(dt_07,
-               unique(dt_post_cut[,.(lsoa01, lsoa11)]),
+               unique(dt_geo_cut[,.(lsoa01, lsoa11)]),
                by.x = "lsoa_code",
                by.y = "lsoa01",
                all.x = T)
