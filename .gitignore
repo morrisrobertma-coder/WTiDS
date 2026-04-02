@@ -1,0 +1,10 @@
+# git ignore file
+
+# xlsx files
+*.xlsx
+
+# xls files
+*.xls
+
+# csv files
+*.csv
