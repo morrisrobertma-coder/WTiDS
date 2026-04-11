@@ -40,4 +40,3 @@ write.csv(dt, file = paste0(inp_path,"geo_map_clean.csv"), row.names = FALSE)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 rm(list = ls())
 gc()
-
