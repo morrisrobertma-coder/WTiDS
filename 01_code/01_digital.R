@@ -29,6 +29,7 @@ dt_geo <- as.data.table(read.csv(paste0(inp_path_geo, file_geo)))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Fixed Broadband Data: Import & Clean
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Source: https://www.ofcom.org.uk/phones-and-broadband/coverage-and-speeds/data-downloads2
 ### Output
 dt_digi_all <- data.table()
 
