@@ -8,3 +8,11 @@
 
 # csv files
 *.csv
+
+# spatial data files
+*.shp.xml
+*.shx
+*.shp
+*.prj
+*.dbf
+*.cpg

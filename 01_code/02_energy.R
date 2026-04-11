@@ -18,7 +18,7 @@ inp_path_geo <- c("~/06_university/00_university_of_sussex/05_summer_semester/03
 inp_en <- c("~/06_university/00_university_of_sussex/05_summer_semester/03_wider_topics_in_data_science/00_repo/00_data/02_energy/")
 out_path <- c("~/06_university/00_university_of_sussex/05_summer_semester/03_wider_topics_in_data_science/00_repo/00_data/xx_clean/")
 
-# digital file names
+# energy file names
 file_energy <- c("LSOA_domestic_elec_2010-2024.xlsx")
 
 # geographic mapping
@@ -143,5 +143,3 @@ write.csv(dt, paste0(out_path,"02_energy_clean.csv"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 dts <- ls(pattern = "^dt_en")
 rm(list = c(dts))
-
-
