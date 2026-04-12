@@ -198,7 +198,9 @@ dt_trans_agg <- copy(dt_trans)[,':='(delta_entry_1y = entrytapcount_2025 - entry
                                      delta_exit_3y = exittapcount_2023 - exittapcount_2022,
                                      delta_exit_4y = exittapcount_2022 - exittapcount_2021,
                                      delta_exit_5y = exittapcount_2021 - exittapcount_2020,
-                                     delta_exit_6y = exittapcount_2020 - exittapcount_2019)]
+                                     delta_exit_6y = exittapcount_2020 - exittapcount_2019,
+                                     delta_entry_all = entrytapcount_2025 - entrytapcount_2019,
+                                     delta_exit_all = exittapcount_2025 - exittapcount_2019)]
 
 # Cut Down Data
 cols_delta <- grep("delta", colnames(dt_trans_agg), value = TRUE)
@@ -219,12 +221,18 @@ cols_delta_mean <- paste0("mean_", cols_delta)
 setnames(dt_trans_agg_cut, cols_delta, cols_delta_mean)
 dt_trans_agg_cut <- dt_trans_agg_cut[order(lsoa_code)]
 
+# Cut some missing data
+### 384-375 = 9 LSOAs cut
+dt_trans_agg_cut <- dt_trans_agg_cut[!(mean_delta_entry_all == "NaN")]
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Flag Deteriorated LSOAs
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Define LSOAs that are deprived
 ### Look at 5y decile movement - larger movements in deprivation
-lsoa_defs <- dt_imd[delta_decile_5y %in% c(-5, -4, -3, -2), lsoa_code]
+### Difference in flags for transportation - due to just London focus
+lsoa_defs <- dt_imd[delta_decile_5y %in% c(-5, -4, -3, -2, -1), lsoa_code]
+lsoa_defs_trans <- dt_imd[delta_decile_5y %in% c(-5, -4, -3), lsoa_code]
 
 # Digital
 dt_d <- dt_digi_agg_cut[, worsening_dep := ifelse(lsoa_code %in% lsoa_defs,
@@ -235,7 +243,7 @@ dt_e <- dt_energy_agg_cut[, worsening_dep := ifelse(lsoa_code %in% lsoa_defs,
                                                              1, 0)]
 
 # Transport
-dt_t <- dt_trans_agg_cut[, worsening_dep := ifelse(lsoa_code %in% lsoa_defs,
+dt_t <- dt_trans_agg_cut[, worsening_dep := ifelse(lsoa_code %in% lsoa_defs_trans,
                                                              1, 0)]
 
 # Look at target distribution
