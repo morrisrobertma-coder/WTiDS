@@ -20,9 +20,13 @@ print(f"seaborn version = {sns.__version__}") # version: 0.13.2
 inp_path = "C:/Users/morri/OneDrive/00_Documents/06_university/00_university_of_sussex/05_summer_semester/03_wider_topics_in_data_science/00_repo/00_data/"
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Import Data - IMD
+# Import Data
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-df = pd.read_csv(f"{inp_path}00_imd/00_imd_data_clean.csv", index_col=0)
+# IMD
+df = pd.read_csv(f"{inp_path}xx_clean/00_imd_data_clean.csv", index_col=0)
+
+# Digital
+df_digi = pd.read_csv(f"{inp_path}xx_clean/01_digi_clean.csv", index_col=0)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Visualisations - IMD

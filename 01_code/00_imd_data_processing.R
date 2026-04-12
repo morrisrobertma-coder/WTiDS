@@ -37,15 +37,6 @@ dt_geo_cut <- dt_geo[,.(lsoa01, lsoa11, lsoa21)]
 dt_geo_cut <- unique(dt_geo_cut)
 gc()
 
-# Geography mapping
-geo_map <- as.data.table(tibble::tribble(
-  ~imd_year, ~geo,
-  2007, "lsoa01",
-  2010, "lsoa01",
-  2015, "lsoa11",
-  2019, "lsoa11",
-  2025, "lsoa21"))
-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # IMD Data: Import
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
