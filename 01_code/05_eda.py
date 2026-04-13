@@ -10,6 +10,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats import ttest_ind
+from sklearn.preprocessing import StandardScaler
+from matplotlib.patches import Patch
 
 # print versions
 print(f"Version Control Information:")
@@ -251,26 +253,92 @@ res = res.sort_values('p_value')
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Visualisation: Digital
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# Superfast Broadband Availability
+# Superfast and Ultrafast Broadband Availability
+fig, axes = plt.subplots(1, 2, figsize=(12,5), sharey=True)
+
+# Superfast
+sns.kdeplot(
+    data=df_digi,
+    x='mean_delta_ufbb_availaibility',
+    hue='worsening_dep',
+    fill=True,
+    common_norm=False,
+    alpha=0.4,
+    ax=axes[0]
+)
+
+axes[0].set_title("Δ Ultra Fast Fibre Broadband Availability",
+                  fontsize=9)
+axes[0].set_xlabel("Δ Ultra Fast Fibre Broadband Availability",
+                   fontsize=9)
+axes[0].set_ylabel("Density")
+axes[0].legend_.set_title("Worsening Deprivation")
+
+# Ultrafast
 sns.kdeplot(
     data=df_digi,
     x='mean_delta_sfbb_availaibility',
     hue='worsening_dep',
     fill=True,
     common_norm=False,
-    alpha=0.4
+    alpha=0.4,
+    ax=axes[1]
 )
 
+axes[1].set_title("Δ Super Fast Fibre Broadband Availability",
+                  fontsize=9)
+axes[1].set_xlabel("Δ Super Fast Fibre Broadband Availability",
+                   fontsize=9)
+axes[1].legend_.set_title("Worsening Deprivation")
 
-
-
+fig.suptitle("Δ Broadband Speed Availability for LSOAs with Differing Deprivation Status")
+plt.show()
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Visualisation: Energy
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Boxplot Comparison
+### Define energy variables
+energy_vars = ['mean_delta_number_of_meters', 'mean_delta_total_consumption_kwh',
+               'mean_delta_mean_consumption_kwh_per_meter']
 
+### Define scalar
+scaler = StandardScaler()
 
+### Cut & melt energy data
+df_energy_cut = df_energy.copy()
+df_energy_cut[energy_vars] = scaler.fit_transform(df_energy_cut[energy_vars])
 
+df_long = df_energy_cut.melt(
+    id_vars='worsening_dep',
+    value_vars=energy_vars,
+    var_name='component',
+    value_name='change'
+)
+
+### Plot
+sns.barplot(
+    data=df_long,
+    x='component',
+    y='change',
+    hue='worsening_dep',
+    errorbar='ci'
+)
+
+### Fix legend elements
+legend_elements = [Patch(facecolor=sns.color_palette()[1], label='Worsening'),
+                   Patch(facecolor=sns.color_palette()[0], label='Not Worsening')]
+
+plt.xticks(ticks=[0,1,2], labels=["Δ Meters", "Δ Mean Consumption","Δ Total Consumption"],
+    rotation=25, fontsize=9)
+
+plt.title("Δ (scaled) of Energy Related Variables per LSOA", fontsize=9)
+plt.ylabel("Relative Scaled Δ", fontsize=9)
+plt.xlabel("")
+plt.legend(handles=legend_elements, title="Deprivation Change", bbox_to_anchor=(1.05, 1),
+           loc='upper left', fontsize=9)
+plt.tight_layout()
+plt.show()
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Visualisation: Transportation
@@ -314,4 +382,3 @@ axes[1].set_title("5 Year Δ in Nominal TfL Exit Passenger Numers per Deprivatio
            fontsize = 9)
 
 plt.show()
-
