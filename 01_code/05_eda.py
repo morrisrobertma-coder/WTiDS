@@ -250,6 +250,9 @@ res['variable'] = res['variable'].str.replace('mean_delta','Δ ').str.replace('_
 # Sort results
 res = res.sort_values('p_value')
 
+# Export Results
+res.to_clipboard(index=False)
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Visualisation: Digital
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -329,14 +332,14 @@ sns.barplot(
 legend_elements = [Patch(facecolor=sns.color_palette()[1], label='Worsening'),
                    Patch(facecolor=sns.color_palette()[0], label='Not Worsening')]
 
-plt.xticks(ticks=[0,1,2], labels=["Δ Meters", "Δ Mean Consumption","Δ Total Consumption"],
-    rotation=25, fontsize=9)
+plt.xticks(ticks=[0,1,2], labels=["Δ Operational Meters", "Δ Mean Consump","Δ Total Consump"],
+           fontsize=9)
 
 plt.title("Δ (scaled) of Energy Related Variables per LSOA", fontsize=9)
 plt.ylabel("Relative Scaled Δ", fontsize=9)
 plt.xlabel("")
-plt.legend(handles=legend_elements, title="Deprivation Change", bbox_to_anchor=(1.05, 1),
-           loc='upper left', fontsize=9)
+plt.legend(handles=legend_elements, title="Deprivation Change", 
+           loc='upper right', fontsize=8)
 plt.tight_layout()
 plt.show()
 

@@ -1,6 +1,20 @@
 # Wider Topics in Data Science
 
-Real Time Monitoring of Local Authority Socioeconomic Position and Deprivation Risk in the UK
+## Real Time Monitoring of Local Authority Socioeconomic Position and Deprivation Risk in the UK
+
+As part of a master's program in Human and Social Data Science (MSc) at the University of Sussex, this repository documents a project's exploratory data analysis.
+
+### Project Aim
+
+This project repository forms the basis of a feasibility study seeking to understand whether passive data sources are suitable for the use of modelling risk parameters of socioeconomic deprivation for micro geographic areas in the UK.
+
+### Data
+
+Data regarding Lower Super Output Area (LSOA) deprivation levels has been collected from the Ministry of Housing, Communities and Local Government with the Office for National Statistics providing mapping data for LSOA versions to UK postcodes.
+
+Open source data from the Office of Gas and Electricity Markets (OFGEM), Office for National Statistics (ONS) and Transport for London (TfL) were downloaded to capture information on energy consumption, digital connectivity and transportation. Geo-spatial data allowing mapping from longitude and latitude transportation locations to LSOA levels were also obtained from TfL and ONS.
+
+The mapping table below outlines the folder structure of the project with two main folders '00_data', containing the raw data inputs and their source and '01_code' providing all data processing, statistical testing and data visualization steps. The data processing pipeline is coded in R, whereas, statistical testing and visualization was coded using Python.
 
 ```         
 WTiDS Project\
